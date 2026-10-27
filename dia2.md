@@ -113,3 +113,64 @@ Estas cosas las vamos definiendo en el pom.xml del proyecto, donde podemos confi
 
     En el Domain > Deployments > Deploy
 
+---
+
+# Paso de Lucene a Opensearch
+
+- Opensearch es un fork de Elasticsearch, creado para mantener una versión abierta y comunitaria del motor de búsqueda y análisis.
+- Opensearch es realmente un GESTOR DE LUCENES EN CLUSTER.
+
+Esto es opcional... peroteniendo en cuenta que la integración con LUCENE desde Sites falla harto... Pues ese opcional.. no es tan opcional!
+
+
+Proceso JAVA (Sites)
+
+   Antes ese proceso JAVA ejecutaba Lucene y eso pasaba en todos los nodos donde corre SITES.
+   Y a su ves todos esos Lucenes, compartían carpeta de ARCHIVOS DE INDICES (Archivos de segmento).
+
+    vvv
+
+Proceso JAVA 1 (Sites)  --->    OPENSEARCH (Que rueda en su propio Servidor de aplicaciones)
+Proceso JAVA 2 (Sites)  --->
+
+Opensearch trabaja en cluster... o no! según yo decica.. pero en un entorno de producción lo normal es que si!
+
+Hay 2 opciones para empezar (y en vuestro caso, para acabar)
+- Un cluster de 1 nodo! (Normalmente no recomendado... solo para entornos de desarrollo)
+    - En vuestro caso, 1 podría servir.
+    - Si se cae, todo el servicio se verá afectado.
+    - Pero en principio, los datos no se pierden (están guardados en un volumen de almacenamiento con Replicación)
+    - La HA la consigo con un cluster Activo/Pasivo.
+      - Monto 2 servidores de OpenSearch y si uno se cae, levanto el otro. Eso lo puedo automatizar y quedo sin servicio 2 minutos que tarda en arrancar el OpenSearch + tiempo minimo que configure de indisponibilidad.
+
+  Me da la sensación que teneís pocos datos allí dentro.
+
+- Un cluster de 3 nodos. (Recomendado para entornos de producción)
+
+---
+Opensearch es una herramienta pensada para hacer ingestas de miles/decenas de miles de documentos por segundo.
+
+Eso se hace independiente del Sites. Ni se monta en el weblogic.
+Es como si monto ORACLE. El Oracle no esta en sites, ni en Weblogic.
+
+Montamos eso.. y montamos otra herramienta OpenSearch Dashboards. <- 2 usos: Ususario finales (nos olvidamos en sites) y para administración/monitorización del cluster de OpenSearch.
+
+Posteriormente en la administración de Sites, activamos la INTEGRACION con OpenSearch.
+    - Configuramos la URL del cluster de OpenSearch.
+    - Y credenciales
+
+En ese momento, Sites crea en OpenSearch en automático los Indices de los assets que gestiona.
+Ahora mismo, con Lucene,para cada asset decimos qué campos queremos indexar y como queremos que se haga la indexación.
+
+Con OpenSearch la pantalla es la misma!
+La diferencia es que en automático, Sites no crea los índices en Lucene, sino que los crea en OpenSearch.
+Como opensearch lo que tiene dentro para indexar son LUCENES, la forma de definir los campos y la indexación en Opensearch es muy similar a lo que hacíamos con Lucene, para Oracle, el desarrollo ha sido poco.
+Y para nosotros queda transparente.
+Seguimos con la misma pantalla.
+
+---
+
+Donde está la trampita!
+En los Analizadores CUSTOM que tengamos en Lucene. Esos no pasan en automático a OpenSearc. Se puede hacer de 2 formas
+- Me creo un nuevo analizador para OpenSearch (.jar) y reemplazo el que tenía en Lucene.
+- Otra opción es definir una plantilla de índice en Opensearch, donde defino el analizador...  la defino en JSON, soin compilar, sin distribuir código.
