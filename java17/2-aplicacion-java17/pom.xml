@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  La misma aplicacion, migrada a Java 17 para WebLogic 14.1.2 (Jakarta EE 8).
+  Comparad con ../1-aplicacion-java8/pom.xml: casi todo el arreglo esta AQUI,
+  no en el codigo.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>es.curso.sites</groupId>
+  <artifactId>aplicacion-java17</artifactId>
+  <version>2.0</version>
+  <packaging>war</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- RELEASE y no source/target. Con source/target 1.8, el JDK 17 compila los
+         sun.* con un simple aviso y revientan en ejecucion. release 17 los para
+         al compilar. -->
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
+
+  <dependencies>
+    <!-- Todo Java EE 8 de golpe, como lo trae WebLogic 14.1.2: servlet,
+         javax.annotation (@PostConstruct), JTA, JPA... Version 8.x = javax. -->
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>8.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- JAXB NO va en la de arriba: en Java EE 8 venia en el JDK. Se pone
+         aparte. El artefacto se llama jakarta.* pero la 2.3.3 trae javax.xml.bind. -->
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>2.3.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- La implementacion. En WebLogic ya esta (provided); aqui la necesitamos
+         para ejecutar la demo fuera del servidor. -->
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.9</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- commons-lang 2 la traia WebLogic 12.2.1.4; la 14.1.2 no. Se empaqueta
+         la propia, y ya puestos la 3 (paquete org.apache.commons.lang3). -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.21.0</version>
+    </dependency>
+
+    <!-- Nashorn ya no viene en el JDK ni lo trae WebLogic: se empaqueta. -->
+    <dependency>
+      <groupId>org.openjdk.nashorn</groupId>
+      <artifactId>nashorn-core</artifactId>
+      <version>15.7</version>
+    </dependency>
+
+    <!-- Lombok al dia: la 1.18.12 revienta el compilador de Java 17. -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.48</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+        <configuration>
+          <!-- Desde la 3.13 Lombok ya no se descubre solo en el classpath: hay
+               que declararlo como procesador de anotaciones. -->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.48</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.5.1</version>
+      </plugin>
+      <!-- Solo para ejecutar la demo fuera de WebLogic: copia TODAS las
+           dependencias, tambien las provided, a target/lib. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.11.0</version>
+        <executions>
+          <execution>
+            <id>dependencias-para-la-demo</id>
+            <phase>package</phase>
+            <goals><goal>copy-dependencies</goal></goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

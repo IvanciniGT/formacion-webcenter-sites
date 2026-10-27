@@ -1,0 +1,5 @@
+{
+  "query": { "match": { "cuerpo": "copa" } },
+  "_source": ["titulo"],
+  "highlight": { "fields": { "cuerpo": {} } }
+}

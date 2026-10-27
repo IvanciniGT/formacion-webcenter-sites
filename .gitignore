@@ -1,0 +1,8 @@
+# JDKs y repositorio Maven locales que monta preparar.sh: 831 MB que cada uno regenera
+.jdks/
+.m2/
+target/
+.DS_Store
+.idea/
+*.iml
+herramientas/weblogic.migration-analysis-tool.jar

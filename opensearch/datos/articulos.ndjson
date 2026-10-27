@@ -1,0 +1,16 @@
+{"index":{"_id":"1"}}
+{"titulo":"La etapa reina se decide en la montaña","cuerpo":"<p>Tres puertos de <b>primera categoría</b> y un final en alto. Los favoritos se vigilaron hasta el último kilómetro.</p>","deporte":"ciclismo","autor":"lucia.mora","etiquetas":["vuelta","montaña"],"fecha":"2026-10-20","visitas":1200,"destacado":true}
+{"index":{"_id":"2"}}
+{"titulo":"Los ciclistas llegan a Madrid","cuerpo":"<p>Última jornada de la carrera, con el pelotón entrando en la capital al atardecer.</p>","deporte":"ciclismo","autor":"lucia.mora","etiquetas":["vuelta"],"fecha":"2026-10-25","visitas":800,"destacado":false}
+{"index":{"_id":"3"}}
+{"titulo":"Final de la copa de baloncesto","cuerpo":"<p>Un triple en el último segundo dio la copa al equipo visitante.</p>","deporte":"baloncesto","autor":"marcos.gil","etiquetas":["copa","final"],"fecha":"2026-10-26","visitas":450,"destacado":true}
+{"index":{"_id":"4"}}
+{"titulo":"Nuevas zapatillas para correr en montaña","cuerpo":"<p>Probamos cinco modelos de <i>trail running</i> en terreno técnico y mojado.</p>","deporte":"atletismo","autor":"ana.ruiz","etiquetas":["material","trail"],"fecha":"2026-10-12","visitas":2300,"destacado":false}
+{"index":{"_id":"5"}}
+{"titulo":"El maratón de Valencia bate su récord de inscritos","cuerpo":"<p>Más de treinta mil corredores tomarán la salida en diciembre.</p>","deporte":"atletismo","autor":"ana.ruiz","etiquetas":["maratón"],"fecha":"2026-10-02","visitas":1750,"destacado":true}
+{"index":{"_id":"6"}}
+{"titulo":"Entrevista con la campeona de ciclismo en pista","cuerpo":"<p>Hablamos de entrenamiento, de velódromos y de los Juegos.</p>","deporte":"ciclismo","autor":"marcos.gil","etiquetas":["entrevista","pista"],"fecha":"2026-09-28","visitas":640,"destacado":false}
+{"index":{"_id":"7"}}
+{"titulo":"Semifinales de baloncesto: crónica","cuerpo":"<p>Defensa intensa y un partido que se fue a la prórroga.</p>","deporte":"baloncesto","autor":"marcos.gil","etiquetas":["copa"],"fecha":"2026-10-24","visitas":980,"destacado":false}
+{"index":{"_id":"8"}}
+{"titulo":"Cómo preparar tu primera carrera de montaña","cuerpo":"<p>Plan de doce semanas, desniveles y alimentación para el día de la prueba.</p>","deporte":"atletismo","autor":"lucia.mora","etiquetas":["trail","entrenamiento"],"fecha":"2026-10-15","visitas":3100,"destacado":true}

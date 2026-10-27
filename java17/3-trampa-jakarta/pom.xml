@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LA TRAMPA DE JAKARTA. Un filtro de servlet hecho con Spring, como los que hay
+  delante de muchos Sites.
+    mvn package                           Spring 5.3 (javax)   -> compila
+    mvn package -Dspring.version=6.2.19   Spring 6   (jakarta) -> NO compila
+  Con Java 17 dan ganas de subirlo todo. Spring 6 ya es jakarta, y WebLogic
+  14.1.2 es javax: hay que quedarse en la ultima 5.3.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>es.curso.sites</groupId>
+  <artifactId>trampa-jakarta</artifactId>
+  <version>1.0</version>
+  <packaging>war</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+    <!-- La ultima de la linea javax. Probad a cambiarla por 6.2.19. -->
+    <spring.version>5.3.39</spring.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>8.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.5.1</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

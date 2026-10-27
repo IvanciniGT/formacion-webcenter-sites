@@ -1,0 +1,9 @@
+{
+  "query": {
+    "multi_match": {
+      "query": "ciclista montañas",
+      "fields": ["titulo^3", "cuerpo"]
+    }
+  },
+  "_source": ["titulo", "deporte"]
+}

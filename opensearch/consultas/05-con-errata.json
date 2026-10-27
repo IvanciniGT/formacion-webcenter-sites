@@ -1,0 +1,4 @@
+{
+  "query": { "match": { "titulo": { "query": "baloncestto", "fuzziness": "AUTO" } } },
+  "_source": ["titulo"]
+}

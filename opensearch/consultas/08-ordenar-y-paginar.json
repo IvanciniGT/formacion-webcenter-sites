@@ -1,0 +1,7 @@
+{
+  "query": { "term": { "destacado": true } },
+  "sort": [ { "visitas": "desc" } ],
+  "from": 0,
+  "size": 2,
+  "_source": ["titulo", "visitas"]
+}

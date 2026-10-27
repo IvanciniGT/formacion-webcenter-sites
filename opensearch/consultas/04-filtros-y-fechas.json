@@ -1,0 +1,12 @@
+{
+  "query": {
+    "bool": {
+      "must":   [ { "multi_match": { "query": "carrera", "fields": ["titulo", "cuerpo"] } } ],
+      "filter": [
+        { "term":  { "deporte": "atletismo" } },
+        { "range": { "fecha": { "gte": "2026-10-10", "lte": "2026-10-31" } } }
+      ]
+    }
+  },
+  "_source": ["titulo", "deporte", "fecha"]
+}

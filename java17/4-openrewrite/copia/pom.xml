@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  La aplicacion «de antes»: asi estaba en WebCenter Sites 12.2.1.4, con Java 8.
+  Compila y funciona con JDK 8. Con JDK 17 se rompe por todos lados, y es lo que
+  se ensena en la demo.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>es.curso.sites</groupId>
+  <artifactId>aplicacion-java8</artifactId>
+  <version>1.0</version>
+  <packaging>war</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- source/target y no release: con JDK 8 no existe -release, y asi era en la epoca -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- Propiedad para poder subirla en clase sin tocar el pom: -Dlombok.version=1.18.48 -->
+    <lombok.version>1.18.12</lombok.version>
+  </properties>
+
+  <dependencies>
+    <!-- Lo da WebLogic 12.2.1.4 -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Lombok de 2020: con JDK 8 va bien. Con JDK 17 revienta el compilador
+         entero antes de llegar a vuestro codigo. -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- «Provided porque ya la pone WebLogic»: la 12.2.1.4 traia commons-lang 2
+         (com.bea.core.apache.commons.lang.jar). La 14.1.2 YA NO. -->
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Fijaos en lo que NO hay: ni JAXB, ni javax.annotation, ni Nashorn.
+         Con Java 8 venian dentro del JDK y nadie las declaraba. -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version>
+      </plugin>
+      <!-- Solo para ejecutar la demo fuera de WebLogic: target/lib hace de «lo
+           que ponia el servidor» (las provided). -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>dependencias-para-la-demo</id>
+            <phase>package</phase>
+            <goals><goal>copy-dependencies</goal></goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

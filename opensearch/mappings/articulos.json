@@ -1,0 +1,37 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "filter": {
+        "palabras_vacias": { "type": "stop", "stopwords": "_spanish_" },
+        "raiz_espanol": { "type": "stemmer", "language": "light_spanish" }
+      },
+      "analyzer": {
+        "espanol_html": {
+          "type": "custom",
+          "char_filter": ["html_strip"],
+          "tokenizer": "standard",
+          "filter": ["lowercase", "palabras_vacias", "raiz_espanol", "asciifolding"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "titulo": {
+        "type": "text",
+        "analyzer": "espanol_html",
+        "fields": { "exacto": { "type": "keyword", "ignore_above": 200 } }
+      },
+      "cuerpo": { "type": "text", "analyzer": "espanol_html" },
+      "deporte": { "type": "keyword" },
+      "autor": { "type": "keyword" },
+      "etiquetas": { "type": "keyword" },
+      "fecha": { "type": "date", "format": "yyyy-MM-dd" },
+      "visitas": { "type": "integer" },
+      "destacado": { "type": "boolean" }
+    }
+  }
+}

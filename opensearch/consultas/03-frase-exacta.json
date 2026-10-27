@@ -1,0 +1,4 @@
+{
+  "query": { "match_phrase": { "cuerpo": "último kilómetro" } },
+  "_source": ["titulo"]
+}

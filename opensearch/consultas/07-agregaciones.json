@@ -1,0 +1,13 @@
+{
+  "size": 0,
+  "aggs": {
+    "por_deporte": {
+      "terms": { "field": "deporte" },
+      "aggs": { "visitas_medias": { "avg": { "field": "visitas" } } }
+    },
+    "por_semana": {
+      "date_histogram": { "field": "fecha", "calendar_interval": "week" }
+    },
+    "etiquetas_mas_usadas": { "terms": { "field": "etiquetas", "size": 5 } }
+  }
+}

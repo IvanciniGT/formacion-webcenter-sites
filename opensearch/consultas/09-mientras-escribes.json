@@ -1,0 +1,4 @@
+{
+  "query": { "match_bool_prefix": { "titulo": "etapa rei" } },
+  "_source": ["titulo"]
+}
