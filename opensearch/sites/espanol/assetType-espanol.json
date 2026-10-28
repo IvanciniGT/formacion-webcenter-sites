@@ -1,0 +1,120 @@
+{
+  "settings": {
+    "index.mapping.ignore_malformed": true,
+    "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "1"
+    },
+    "analysis": {
+      "filter": {
+        "spanish_stop": {
+          "type": "stop",
+          "stopwords": "_spanish_"
+        },
+        "spanish_stemmer": {
+          "type": "stemmer",
+          "language": "light_spanish"
+        }
+      },
+      "analyzer": {
+        "default": {
+          "type": "custom",
+          "char_filter": [
+            "html_strip"
+          ],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "asciifolding",
+            "spanish_stop",
+            "spanish_stemmer"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": true,
+    "properties": {
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 64
+          }
+        }
+      },
+      "description": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 128
+          }
+        }
+      },
+      "startdate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss.SSS"
+      },
+      "enddate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss.SSS"
+      },
+      "updateddate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss.SSS"
+      },
+      "createddate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss.SSS"
+      },
+      "externaldoctype": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "siteid": {
+        "type": "text"
+      },
+      "createdby": {
+        "type": "keyword"
+      },
+      "updatedby": {
+        "type": "keyword"
+      },
+      "AssetType": {
+        "type": "keyword"
+      },
+      "locale": {
+        "type": "keyword"
+      },
+      "subtype": {
+        "type": "keyword"
+      },
+      "path": {
+        "type": "keyword"
+      },
+      "fwtags": {
+        "type": "keyword"
+      },
+      "Webreference": {
+        "type": "keyword"
+      },
+      "SegRating": {
+        "type": "keyword"
+      },
+      "Publist": {
+        "type": "keyword"
+      },
+      "AssetType_Description": {
+        "type": "keyword"
+      },
+      "subtypeid": {
+        "type": "keyword"
+      }
+    }
+  }
+}

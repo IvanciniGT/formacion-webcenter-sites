@@ -1,0 +1,15 @@
+<?XML VERSION="1.0"?>
+<!DOCTYPE PRESENTATIONOBJECT SYSTEM "presentationobject.dtd">
+<!--
+  El mismo editor de atributo, en 14.1.2. Cambia la etiqueta y la ruta.
+
+  Avisports trae dos así: TinyMCE500x300 y TinyMCE300x300, solo con
+  WIDTH y HEIGHT. TINYMCE.jsp lee además TOOLBAR, CONFIG, CONFIGOBJ, RESIZE,
+  LAZYLOAD, ALLOWEDASSETTYPES e IMAGEASSETTYPE.
+
+  CONFIG es relativo a /sites/tinymce/ (xcelerate.tinymce.basepath).
+-->
+<PRESENTATIONOBJECT NAME="CursoMigCuerpo">
+  <TINYMCE WIDTH="627px" HEIGHT="400px" TOOLBAR="Article"
+           CONFIG="../cursomig/tinymce/config.js"></TINYMCE>
+</PRESENTATIONOBJECT>

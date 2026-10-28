@@ -1,0 +1,36 @@
+/* classes defined for ckeditor only */
+.cktitle {
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 17px;
+	font-weight: bold;
+	line-height: 18px;
+}
+
+.cktext {
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 14px;
+}
+
+.ckheadline {
+	font-family: Arial Black;
+	font-size: 22px;
+	font-weight: bold;
+	line-height: 26px;
+	color: #0000FF;
+}
+
+.ckhometeaser {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+}
+
+.ckbody {
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	line-height: 22px;
+}
+

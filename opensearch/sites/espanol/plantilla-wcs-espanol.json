@@ -1,0 +1,26 @@
+{
+  "index_patterns": ["wcs_*"],
+  "priority": 500,
+  "template": {
+    "settings": {
+      "index": { "number_of_replicas": 0 },
+      "analysis": {
+        "analyzer": {
+          "default": { "type": "spanish" }
+        }
+      }
+    },
+    "mappings": {
+      "dynamic_templates": [
+        { "textos_en_espanol": {
+            "match_mapping_type": "string",
+            "mapping": { "type": "text", "analyzer": "spanish",
+                         "fields": { "keyword": { "type": "keyword", "ignore_above": 256 } } } } }
+      ],
+      "properties": {
+        "name":        { "type": "text", "analyzer": "spanish" },
+        "description": { "type": "text", "analyzer": "spanish" }
+      }
+    }
+  }
+}
