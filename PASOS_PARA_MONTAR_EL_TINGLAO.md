@@ -14,6 +14,9 @@
         Necesitamos que esto se despliegue en el weblogic de desarrollo.
         Y eso cada vez que hagamos push con un tag
 
+        Y DE PASO AL SONARQUBE!!!!! ME LO MANDAS
+        Y me guardar el artefacto generado con su versión (WAR)
+
 2. Clonar el repo: El comando lo ejecutar en una terminal, en la carpeta QUE TE INTERESE.
    
     git clone <URL_DEL_REPO>
@@ -68,7 +71,7 @@ AHORA?
      Ese programa debe copiar vuestro archivo target/extend.sites.webapp-lib-14.1.2-oracle.war en el weblogic.
      Si lo han montado:
 
-        git tag v1.0.0 # Poniendo aqui numeros incrementales
+        git tag v1.0.0 -m "mensaje" # Poniendo aqui numeros incrementales
         git push --tags
 
    - OPCION B (CUTRE pero efectiva):
@@ -116,6 +119,14 @@ Y luego definimos los perfiles en el archivo `pom.xml` de maven, por ejemplo:
             <web.service1.url>http://development.example.com</web.service.url>
             <web.service2.url>http://development.example.com</web.service.url>
             <web.service3.url>http://development.example.com</web.service.url>
+        </properties>
+    </profile>
+    <profile>
+        <id>pre</id>
+        <properties>
+            <web.service1.url>http://production.example.com</web.service.url>
+            <web.service2.url>http://production.example.com</web.service.url>
+            <web.service3.url>http://production.example.com</web.service.url>
         </properties>
     </profile>
     <profile>
