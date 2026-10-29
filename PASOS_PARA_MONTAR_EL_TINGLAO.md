@@ -49,7 +49,7 @@
    a la carpeta src/main/webapp/WEB-INF
 
 5. CADA VEZ QUE QUIERA TRABAJAR EN EL PROYECTO:
-      1. Ya trabajo!
+      1. Ya trabajo!    
          - Cambio los archivos de tinyMCE si es necesario.
          - Cambio los jsp si es necesario.
          - Copio cosas de los archivos web-version12.xml y weblogic-version12.xml si es necesario a los nuevos web.xml y weblogic.xml.
