@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Construye la extend WAR de WebCenter Sites (extend.sites.webapp-lib.war) a
+  partir de src/main/webapp, con mvn package.
+
+  Oracle la construye igual: dentro de la suya va su pom, con packaging war,
+  failOnMissingWebXml=false y un manifiesto propio. Lo unico que importa del
+  resultado es el MANIFEST: WebLogic engancha la libreria a sites.war por esos
+  tres campos, y sites.war la pide con version EXACTA en su weblogic.xml:
+
+      <library-name>extend.sites.webapp-lib</library-name>
+      <specification-version>1.0</specification-version>
+      <implementation-version>14.1.2</implementation-version>
+
+  Si no coinciden, Sites no arranca o arranca sin vuestras personalizaciones.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.cliente.sites</groupId>
+    <artifactId>extend.sites.webapp-lib</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>Personalizaciones de WebCenter Sites (extend WAR)</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--
+          TODO: copiadlas del META-INF/MANIFEST.MF de VUESTRA extend WAR desplegada.
+          En 12.2.1.4 la Implementation-Version no sera 14.1.2: con estas dos
+          propiedades la misma build sirve antes y despues de migrar
+          (mvn package -Dsites.implementation=12.2.1.4).
+        -->
+        <sites.especificacion>1.0</sites.especificacion>
+        <sites.implementation>14.1.2</sites.implementation>
+        <!-- El filtrado de webResources no ve maven.build.timestamp directamente: va por una propiedad -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <sello.construida>${maven.build.timestamp}</sello.construida>
+    </properties>
+
+    <build>
+        <!-- El nombre que espera WebLogic en sites-home: se sustituye el fichero tal cual -->
+        <finalName>extend.sites.webapp-lib</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <!-- SOLO PARA LA DEMO: el sello que lee cursomig/extend-prueba.jsp -->
+                    <webResources>
+                        <resource>
+                            <directory>src/main/sellado</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                    <archive>
+                        <!-- Sin esto Maven mete su pom en META-INF/maven, y nadie lo necesita en el servidor -->
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestEntries>
+                            <Extension-Name>extend.sites.webapp-lib</Extension-Name>
+                            <Specification-Title>extend.sites.webapp-lib</Specification-Title>
+                            <Specification-Version>${sites.especificacion}</Specification-Version>
+                            <Implementation-Title>extend.sites.webapp-lib</Implementation-Title>
+                            <Implementation-Version>${sites.implementation}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

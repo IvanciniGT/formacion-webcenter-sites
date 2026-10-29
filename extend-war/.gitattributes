@@ -1,0 +1,6 @@
+# git NO toca los finales de linea en este proyecto. Se trabaja en Windows y se
+# despliega en Linux: Git para Windows viene con core.autocrlf=true y, sin esta
+# linea, cada JSP que sale del servidor con LF volveria del clone con CRLF. La
+# WAR construida ya no seria igual que la desplegada, y comparar.ps1 lo daria
+# todo por distinto. Lo que hay en la WAR es lo que se guarda.
+* -text
